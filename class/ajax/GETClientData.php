@@ -75,6 +75,7 @@ class GETClientData extends AJAX {
         	$this->addResult('newFlag', false);
         $client->fname = $tClient->fname;
         $client->lname = $tClient->lname;
+        $client->id = $tClient->id;
         $client->name = $client->fname . ' ' . $client->lname;
        
         // Check if existing client has referral set
