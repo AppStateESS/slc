@@ -145,6 +145,52 @@ var ViewClientMain = React.createClass({
             });
         }
     },
+    postTransfer: function(tChecked) {
+        var client = this.state.clientData.client;
+        var tData = { id      : client.id,
+                      fname   : client.fname,
+                      lname   : client.lname,
+                      fullName: client.name,
+                      checked : tChecked,
+                      sType   : 'transfer' };
+
+        var transferData = JSON.stringify(tData);
+
+        $.ajax({
+            url: 'index.php?module=slc&action=POSTTransferInternat',
+            type: 'POST',
+            data: transferData,
+            dataType: 'json',
+            success: function() {
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
+    postInternational: function(iChecked) {
+        var client = this.state.clientData.client;
+        var iData = { id      : client.id,
+                      fname   : client.fname,
+                      lname   : client.lname,
+                      fullName: client.name,
+                      checked : iChecked,
+                      sType   : 'international' };
+
+        var internationalData = JSON.stringify(iData);
+
+        $.ajax({
+            url: 'index.php?module=slc&action=POSTTransferInternat',
+            type: 'POST',
+            data: internationalData,
+            dataType: 'json',
+            success: function() {
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
     render: function() {
         if (this.state.clientData == null)
         {
@@ -219,6 +265,16 @@ var ViewClientMain = React.createClass({
                     </div>
                     <div className="col-md-6">
                         <span id="first_visit" className="pull-right">First Visit: {client.first_visit}</span>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-3">
+                        <TransferInternCheck tChecked           = {client.transfer} 
+                                             iChecked           = {client.international} 
+                                             postTransfer       = {this.postTransfer}
+                                             postInternational  = {this.postInternational} />
+                        
                     </div>
                 </div>
 
@@ -518,7 +574,99 @@ var EmailSurvey = React.createClass({
     }
 });
 
+var TransferInternCheck = React.createClass({
+    getInitialState: function(){
+        return { isTChecked: null,
+                 isIChecked: null };
+    },
+    componentWillMount: function(){
+        // this.props.checked comes back as a string, must
+        // convert to int for boolean expression.
+
+        var tChecked = parseInt(this.props.tChecked);
+        var iChecked = parseInt(this.props.iChecked);
+
+        this.setState({ isTChecked: tChecked,
+                        isIChecked: iChecked });
+    },
+    handleTCheck: function(e){
+        // Determine if the checkbox is checked.
+        this.setState({ isTChecked: e.target.checked });
+        this.props.postTransfer(e.target.checked);
+    },
+    handleICheck: function(e){
+        // Determine if the checkbox is checked.
+        this.setState({ isIChecked: e.target.checked });
+        this.props.postInternational(e.target.checked);
+    },
+    render: function() {
+        var iChecked = this.state.isIChecked;
+        var tChecked = this.state.isTChecked;
+        if(iChecked == 1) {
+            return(
+                <div> 
+                    <label className="checkbox-inline disabled">
+                        <input type="checkbox" value="" disabled checked={this.state.isTChecked} onChange={this.handleTCheck}/> Transfer      
+                    </label>
+
+                    <label className="checkbox-inline">
+                        <input type="checkbox" value="" checked={this.state.isIChecked} onChange={this.handleICheck}/> International      
+                    </label>
+                </div>
+            )
+        } else if(tChecked == 1) {
+            return(
+                <div> 
+                    <label className="checkbox-inline">
+                        <input type="checkbox" value="" checked={this.state.isTChecked} onChange={this.handleTCheck}/> Transfer      
+                    </label>
+
+                    <label className="checkbox-inline disabled">
+                        <input type="checkbox" value="" disabled checked={this.state.isIChecked} onChange={this.handleICheck}/> International      
+                    </label>
+                </div>
+            )
+        } else {
+            return(
+                <div> 
+                    <label className="checkbox-inline">
+                        <input type="checkbox" value="" checked={this.state.isTChecked} onChange={this.handleTCheck}/> Transfer      
+                    </label>
+
+                    <label className="checkbox-inline">
+                        <input type="checkbox"  value="" checked={this.state.isIChecked} onChange={this.handleICheck}/> International      
+                    </label>
+                </div>
+            )
+        }
+        
+    }
+});
+
 React.render(
     <ViewClientMain />,
     document.getElementById('clientviews')
 );
+
+
+/*
+    if(this.props.name == "Transfer" && this.props.iChecked > 0){
+        return(
+            <label className="checkbox-inline disabled">
+                <input type="checkbox" value="" checked={this.state.isChecked} disabled/> {this.props.name}      
+            </label>
+        )
+    } else if(this.props.name == "International" && this.props.tChecked > 0){
+        return(
+            <label className="checkbox-inline disabled">
+                <input type="checkbox" value="" checked={this.state.isChecked} disabled/> {this.props.name}      
+            </label>
+        )
+    } else {
+        return(
+            <label className="checkbox-inline">
+                <input type="checkbox" value="" checked={this.state.isChecked} onChange={this.handleCheck}/> {this.props.name}      
+            </label>
+        )
+    }
+*/
