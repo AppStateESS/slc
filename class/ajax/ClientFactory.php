@@ -1,12 +1,13 @@
 <?php
 namespace slc\ajax;
+use \phpws2\Database;
 
-class ClientFactory 
+class ClientFactory
 {
 	// Saves the client to the database
 	public static function saveClient ($client)
 	{
-		$db = \Database::newDB();
+		$db = Database::newDB();
 		$pdo = $db->getPDO();
 
         $values = array('id'=>$client->getId(),
@@ -19,7 +20,7 @@ class ClientFactory
 						'international' => $client->getInternational());
 
         $query = 'INSERT INTO slc_client (id, first_visit, classification, living_location, major, referral, transfer, international)
-        		  VALUES (:id, :fv, :classification, 
+        		  VALUES (:id, :fv, :classification,
         		  		  :ll, :major, :referral,
         		  		  :transfer, :international)';
 
@@ -28,7 +29,7 @@ class ClientFactory
 	}
 
 	public static function updateClient ($client){
-		$db = \Database::newDB();
+		$db = Database::newDB();
 		$pdo = $db->getPDO();
 
         $values = array('id' 			=> $client->getId(),
@@ -40,13 +41,13 @@ class ClientFactory
 						'transfer'		=> $client->getTransfer(),
 						'international' => $client->getInternational());
 
-        $query = 'UPDATE slc_client 
-        		  SET first_visit 	  = :fv, 
-        		  	  classification  = :classification, 
-        		  	  living_location = :ll, 
+        $query = 'UPDATE slc_client
+        		  SET first_visit 	  = :fv,
+        		  	  classification  = :classification,
+        		  	  living_location = :ll,
         		  	  major 		  = :major,
-        		  	  referral 		  = :referral, 
-        		  	  transfer 		  = :transfer, 
+        		  	  referral 		  = :referral,
+        		  	  transfer 		  = :transfer,
         		  	  international   = :international
         		  WHERE id = :id';
 
@@ -57,10 +58,10 @@ class ClientFactory
 	// Grabs the client from the database by their encrypted banner id.
 	public static function getClientByEncryBanner($eBannerId, $fname, $lname, $fullName)
 	{
-		$db = \Database::newDB();
+		$db = Database::newDB();
 		$pdo = $db->getPDO();
 
-		$query = 'SELECT * 
+		$query = 'SELECT *
 				  FROM slc_client
 				  WHERE id = :eBannerId';
 
@@ -82,14 +83,14 @@ class ClientFactory
 		}
 
 		return $client;
-		
+
 	}
 
-	// Grabs the student data from the database 
+	// Grabs the student data from the database
 	// (Don't confuse a student with a client)
 	public static function getClientByBannerId($bannerId)
 	{
-		$db = \Database::newDB();
+		$db = Database::newDB();
 		$pdo = $db->getPDO();
 
 		$query = "SELECT *
@@ -106,13 +107,13 @@ class ClientFactory
 	// Grabs the referral type that the client has set up.
 	public static function getReferralType($cReferral)
 	{
-		$db = \Database::newDB();
+		$db = Database::newDB();
 		$pdo = $db->getPDO();
 
-		$query = 'SELECT * 
-    			  FROM slc_referral_type 
+		$query = 'SELECT *
+    			  FROM slc_referral_type
     			  WHERE id= :cReferral';
-        
+
         $sth = $pdo->prepare($query);
 		$sth->execute(array('cReferral'=>$cReferral));
 		$result = $sth->fetchAll(\PDO::FETCH_ASSOC);
@@ -120,5 +121,3 @@ class ClientFactory
 		return $result;
 	}
 }
-
- 

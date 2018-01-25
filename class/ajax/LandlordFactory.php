@@ -1,12 +1,13 @@
 <?php
 namespace slc\ajax;
+use \phpws2\Database;
 
 class LandlordFactory{
 
 	public static function getLandlords()
 	{
 
-		$db = \Database::newDB();
+		$db = Database::newDB();
 		$pdo = $db->getPDO();
 
 		$query = "SELECT * FROM slc_landlord ORDER BY name ASC";
@@ -21,8 +22,7 @@ class LandlordFactory{
 	public static function saveLandlords($llName)
 	{
 
-
-		$db = \Database::newDB();
+		$db = Database::newDB();
 		$pdo = $db->getPDO();
 
 		$query = "INSERT INTO slc_landlord (name)
@@ -37,7 +37,7 @@ class LandlordFactory{
 		$id = $landlordData['id'];
 		$name = $landlordData['name'];
 
-		$db = \Database::newDB();
+		$db = Database::newDB();
 		$pdo = $db->getPDO();
 
 		$query = "UPDATE slc_landlord
@@ -52,7 +52,7 @@ class LandlordFactory{
 	public static function deleteLandlords()
 	{
 
-		// $db = \Database::newDB();
+		// $db = Database::newDB();
 		// $pdo = $db->getPDO();
 
 		// $query = "SELECT * FROM slc_landlord";
@@ -64,5 +64,3 @@ class LandlordFactory{
 		// return $result;
 	}
 }
-
- 

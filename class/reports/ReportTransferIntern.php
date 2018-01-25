@@ -18,9 +18,9 @@ class ReportTransferIntern extends Report {
     public function execute()
     {
 
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $pdo = $db->getPDO();
-        $query = 'SELECT sum(transfer) as transfer, 
+        $query = 'SELECT sum(transfer) as transfer,
                          sum(international) as international
                   FROM   slc_client
                   WHERE  first_visit >= :startDate
@@ -42,7 +42,7 @@ class ReportTransferIntern extends Report {
             $row['INTERNAT'] = $result['international'];
             $content['tranInter'][] = $row;
         }
-        
+
         $this->content = $content;
 	}
 

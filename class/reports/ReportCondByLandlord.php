@@ -41,7 +41,7 @@ class ReportCondByLandlord extends Report {
             $this->issuenames[] = $issue['description'];
 
 
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $this->pdo = $db->getPDO();
 
         // Building issues count based on the number of conditions

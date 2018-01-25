@@ -1,9 +1,10 @@
 <?php
 namespace slc\views;
+use slc\CommandContext;
 
 class ViewMain extends View
 {
-	 public function display(\slc\CommandContext $context) {
+	 public function display(CommandContext $context) {
 
 	 	$form = new \PHPWS_Form('client_id_entry');
 	 	$form->addHidden('module', 'slc');
