@@ -4,9 +4,9 @@ namespace slc\ajax;
 class PostTransferInternat extends AJAX {
 
 	public function execute(){
-		$req = \Server::getCurrentRequest();
+		$req = \Canopy\Server::getCurrentRequest();
         $tiData = json_decode($req->getRawData(), true);
-        
+
         $client = ClientFactory::getClientByEncryBanner($tiData['id'], $tiData['fname'], $tiData['lname'], $tiData['fullName']);
 
 
@@ -15,7 +15,7 @@ class PostTransferInternat extends AJAX {
         } else {
         	$client->setInternational($tiData['checked']);
         }
-        
+
         ClientFactory::updateClient($client);
 
     //    $this->addResult("msg", "Successfully changed $tiData['sType']");

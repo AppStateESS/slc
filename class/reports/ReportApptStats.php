@@ -96,10 +96,10 @@ class ReportApptStats extends Report {
             $db->addWhere('counter', $count, '=', 'AND');
 
             $result = $db->select('col');
-            $visits = $visits + $result;
-
-
-            $followups += ($count) * count($result);
+            if($result != null){
+                $visits = $visits + $result;
+                $followups += ($count) * count($result);
+            }
             $db->resetWhere();
         }
 

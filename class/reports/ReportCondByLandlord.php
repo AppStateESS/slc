@@ -180,10 +180,12 @@ class ReportCondByLandlord extends Report {
 
 
         // Grab each landlord row for parsing
-        $landlords = $this->content['landlord_tentant_repeat'];
-        foreach ($landlords as $l)
-        {
-            $data .= $csvReport->sputcsv($l);
+        if(isset($this->content['landlord_tenant_repeat'])){
+            $landlords = $this->content['landlord_tentant_repeat'];
+            foreach ($landlords as $l)
+            {
+                $data .= $csvReport->sputcsv($l);
+            }
         }
 
         $totals = $this->total;
