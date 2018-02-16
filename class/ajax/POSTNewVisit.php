@@ -16,7 +16,7 @@ class POSTNewVisit extends AJAX {
 		$time = timestamp();
 		$visit = new \slc\Visit($_REQUEST['banner_id'], $time);
 
-		$db = \Database::newDB();
+		$db = \phpws2\Database::newDB();
 		$pdo = $db->getPDO();
 		$pdo->beginTransaction();
 		try{

@@ -4,7 +4,7 @@ namespace slc\ajax;
 class PUTLandlord extends AJAX{
 
 	public function execute(){
-		$req = \Server::getCurrentRequest();
+		$req = \Canopy\Server::getCurrentRequest();
         $landlordData = json_decode($req->getRawData(), true);
 
         $landlords = LandlordFactory::getLandlords();

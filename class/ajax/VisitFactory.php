@@ -1,16 +1,16 @@
 <?php
 namespace slc\ajax;
 
-class VisitFactory 
-{	
-	// Grabs the list of visits by the client's ID from the database. 
+class VisitFactory
+{
+	// Grabs the list of visits by the client's ID from the database.
 	public static function getVisitByCId($clientId)
 	{
-		$db = \Database::newDB();
+		$db = \phpws2\Database::newDB();
 		$pdo = $db->getPDO();
 
-		$query = 'SELECT id, initial_date 
-				  FROM slc_visit 
+		$query = 'SELECT id, initial_date
+				  FROM slc_visit
 				  WHERE client_id = :clientId';
 
 		$sth = $pdo->prepare($query);
@@ -35,5 +35,3 @@ class VisitFactory
         return $pdo->lastInsertId();
 	}
 }
-
- 

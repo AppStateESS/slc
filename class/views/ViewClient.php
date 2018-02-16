@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace slc\views;
 
 class ViewClient extends View {
@@ -11,29 +11,29 @@ class ViewClient extends View {
 
 			$HTMLcontent = "";
 			$referral = "";
-		
+
 		 	$content = array();
 
 			\javascriptMod('slc', 'viewClient', array('BANNER_ID'=>$banner_id));
-				 
+
 		 	$HTMLcontent .= \PHPWS_Template::process($content, 'slc', 'Client.tpl');
-		 	
+
 		 	return parent::useTemplate($HTMLcontent); // Insert into the accessible div
 		}
 		else
 		{
 			\NQ::simple('slc', \slc\NotificationView::ERROR, 'Banner ID is invalid.');
 			header('Location: ./?module=slc');
-		}	
+		}
 	}
 
 	public function checkBannerID($banner_id)
 	{
-		$db = \Database::newDB();
+		$db = \phpws2\Database::newDB();
 		$pdo = $db->getPDO();
 
-		$query = 'SELECT id 
-				  FROM slc_student_data 
+		$query = 'SELECT id
+				  FROM slc_student_data
 				  WHERE id = :bannerId';
 
 		$sth = $pdo->prepare($query);
@@ -42,4 +42,3 @@ class ViewClient extends View {
 		return $result;
 	}
 }
- 

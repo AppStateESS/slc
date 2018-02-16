@@ -19,7 +19,7 @@ class GETNewIssue extends AJAX {
 		$this->addResult("tree", $tree);
 		$this->addResult("landlords", $landlords);
 	}
-	
+
 	private function grabProblemTypes($type, $id) {
 
 		// Grabs info about the landlord-tenant and the generic
@@ -29,12 +29,12 @@ class GETNewIssue extends AJAX {
 
 
 
-		$db = \Database::newDB();
+		$db = \phpws2\Database::newDB();
 		$pdo = $db->getPDO();
 
-		$query = "SELECT id, type, description 
-				  FROM slc_problem 
-				  WHERE id = :id 
+		$query = "SELECT id, type, description
+				  FROM slc_problem
+				  WHERE id = :id
 				  OR type = :name";
 
 		$sth = $pdo->prepare($query);
@@ -48,12 +48,10 @@ class GETNewIssue extends AJAX {
 
 		$typeArray = array();
 		foreach ($result as $r) {
-			$typeArray[$type][] = array("problem_id" => $r['id'], "name"=>$r['description'], "type"=>$r['type']);      	
+			$typeArray[$type][] = array("problem_id" => $r['id'], "name"=>$r['description'], "type"=>$r['type']);
         }
-	
+
 		return $typeArray;
 	}
 
 }
-
- 

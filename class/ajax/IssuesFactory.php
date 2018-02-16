@@ -15,7 +15,7 @@ class IssuesFactory
 	// Grabs the issues based off of the visit for a given person
 	public static function getIssueByVisitId($vid)
 	{
-		$db = \Database::newDB();
+		$db = \phpws2\Database::newDB();
 		$pdo = $db->getPDO();
 
 		$query = 'SELECT issue.id AS "ISSUEID",

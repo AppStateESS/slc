@@ -5,7 +5,7 @@ class POSTLandlord extends AJAX{
 
 	public function execute(){
 
-		$req = \Server::getCurrentRequest();
+		$req = \Canopy\Server::getCurrentRequest();
         $landlordName = json_decode($req->getRawData(), true);
 
         $landlords = LandlordFactory::getLandlords();

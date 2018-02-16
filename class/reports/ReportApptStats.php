@@ -1,5 +1,6 @@
 <?php
 namespace slc\reports;
+use \phpws2\Database;
 
 class ReportApptStats extends Report {
 
@@ -24,7 +25,7 @@ class ReportApptStats extends Report {
         // Get the array of all visits whose initial visit happened in the time period. Equivalent to this query:
         // SELECT DISTINCT(id) FROM slc_visit WHERE initial_date >= $startDate AND initial_date < $endDate;
 
-        $db = \Database::newDB();
+        $db = Database::newDB();
         $pdo = $db->getPDO();
         $query = 'SELECT distinct(slc_visit.id) FROM slc_visit
                   WHERE (slc_visit.initial_date >= :start AND slc_visit.initial_date < :end)
@@ -63,7 +64,7 @@ class ReportApptStats extends Report {
 
         // Get the array of different 'counts' greater than 1. Equivalent to this query:
         // SELECT DISTINCT(counter) FROM slc_visit_issue_index WHERE counter>'1' ORDER BY counter DESC;
-        $db = \Database::newDB();
+        $db = Database::newDB();
         $pdo = $db->getPDO();
         $query = 'SELECT distinct(slc_issue.counter)
                   FROM slc_issue
@@ -95,17 +96,17 @@ class ReportApptStats extends Report {
             $db->addWhere('counter', $count, '=', 'AND');
 
             $result = $db->select('col');
-            $visits = $visits + $result;
-
-
-            $followups += ($count) * count($result);
+            if($result != null){
+                $visits = $visits + $result;
+                $followups += ($count) * count($result);
+            }
             $db->resetWhere();
         }
 
         // Get # of clients. Equivalent to this query:
         // SELECT COUNT(DISTINCT(id)) FROM slc_client
         // WHERE first_visit >= $startDate AND first_visit < $endDate;
-        $db = \Database::newDB();
+        $db = Database::newDB();
         $pdo = $db->getPDO();
         $query = 'SELECT count(distinct(slc_visit.client_id))
                   FROM slc_visit

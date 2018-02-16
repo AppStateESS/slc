@@ -41,7 +41,7 @@ class ReportCondByLandlord extends Report {
             $this->issuenames[] = $issue['description'];
 
 
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $this->pdo = $db->getPDO();
 
         // Building issues count based on the number of conditions
@@ -180,10 +180,12 @@ class ReportCondByLandlord extends Report {
 
 
         // Grab each landlord row for parsing
-        $landlords = $this->content['landlord_tentant_repeat'];
-        foreach ($landlords as $l)
-        {
-            $data .= $csvReport->sputcsv($l);
+        if(isset($this->content['landlord_tenant_repeat'])){
+            $landlords = $this->content['landlord_tentant_repeat'];
+            foreach ($landlords as $l)
+            {
+                $data .= $csvReport->sputcsv($l);
+            }
         }
 
         $totals = $this->total;

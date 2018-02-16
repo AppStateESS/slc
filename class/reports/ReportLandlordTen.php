@@ -17,6 +17,7 @@ class ReportLandlordTen extends Report {
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
+        $this->emptyLandlord = true;
         $this->execute();
     }
 
@@ -25,7 +26,6 @@ class ReportLandlordTen extends Report {
         $landlords = "SELECT * FROM slc_landlord";
         $db = new \PHPWS_DB();
         $landlords = $db->select(null, $landlords);
-
 
         $issues = 'SELECT *
                    FROM slc_problem
@@ -40,7 +40,7 @@ class ReportLandlordTen extends Report {
         foreach( $issues as $issue )
             $this->issuenames[] = $issue['description'];
 
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $this->pdo = $db->getPDO();
 
         // Building issues count based on the number of conditions
@@ -168,19 +168,20 @@ class ReportLandlordTen extends Report {
           $tpl->setData(array("ISSUE_NAME"=>$issueName));
           $tpl->parseCurrentBlock();
         }
-
-        foreach ($this->content['landlord_tenant_repeat'] as $landlord)
-        {
-            foreach ($landlord['ISSUES'] as $value)
+        if(isset($this->content['landlord_tenant_repeat'])){
+            foreach ($this->content['landlord_tenant_repeat'] as $landlord)
             {
-                 $tpl->setCurrentBlock("landlord_issues_repeat");
-                 $tpl->setData(array("LANDLORD_ISSUE"=>$value));
-                 $tpl->parseCurrentBlock();
+                foreach ($landlord['ISSUES'] as $value)
+                {
+                     $tpl->setCurrentBlock("landlord_issues_repeat");
+                     $tpl->setData(array("LANDLORD_ISSUE"=>$value));
+                     $tpl->parseCurrentBlock();
+                }
+                $tpl->setCurrentBlock("landlord_tenant_repeat");
+                $tpl->setData(array("LANDLORD_NAME"=>$landlord['NAME']));
+                $tpl->setData(array("LANDLORD_TOTAL"=>$landlord['TOTAL']));
+                $tpl->parseCurrentBlock();
             }
-            $tpl->setCurrentBlock("landlord_tenant_repeat");
-            $tpl->setData(array("LANDLORD_NAME"=>$landlord['NAME']));
-            $tpl->setData(array("LANDLORD_TOTAL"=>$landlord['TOTAL']));
-            $tpl->parseCurrentBlock();
         }
 
         foreach($this->total as $issueTotal)
@@ -215,11 +216,13 @@ class ReportLandlordTen extends Report {
 
 
         // Grab each landlord row for parsing
-        $landlords = $this->content['landlord_tenant_repeat'];
-        foreach ($landlords as $l)
-        {
-            unset($l['ISSUES']);
-            $data .= $csvReport->sputcsv($l);
+        if(isset($this->content['landlord_tenant_repeat'])){
+            $landlords = $this->content['landlord_tenant_repeat'];
+            foreach ($landlords as $l)
+            {
+                unset($l['ISSUES']);
+                $data .= $csvReport->sputcsv($l);
+            }
         }
 
 

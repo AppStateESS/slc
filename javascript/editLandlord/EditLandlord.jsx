@@ -98,7 +98,7 @@ var ViewEditLandlords = React.createClass({
             name = data;
         }
 
-        
+
         if(name.trim() == '' || name == undefined || name == null){
             return false;
         } else {
@@ -141,7 +141,7 @@ var ViewEditLandlords = React.createClass({
                                 </div>
                                 <br />
                                 <div className="col-md-9">
-                                <Table landlordData = {this.state.filteredData} 
+                                <Table landlordData = {this.state.filteredData}
                                        editLandlord = {this.editLandlord} />
                                 </div>
                             </div>
@@ -256,14 +256,14 @@ var LandlordRow = React.createClass({
     },
     render: function() {
         if (!this.state.showEdit){
-            return( 
+            return(
                 <tr>
                     <td>{this.props.name}</td>
                     <td> <a onClick={this.handleEdit}> <i className="fa fa-pencil-square-o" /> </a> </td>
                 </tr>
             );
         } else {
-            return( 
+            return(
                 <tr>
                     <td> <input type="text" className="form-control" ref="llName" defaultValue={this.props.name}/> </td>
                     <td> <button className="btn btn-default btn-sm" onClick={this.handleSave}>Save</button> </td>
@@ -271,7 +271,7 @@ var LandlordRow = React.createClass({
             );
         }
     }
-    
+
 });
 
 var AddLandlords = React.createClass({
@@ -280,12 +280,12 @@ var AddLandlords = React.createClass({
         this.props.addLandlord(this.refs.landlord.value);
     },
     render: function() {
-        return( 
+        return(
             <div className="panel panel-default">
                 <div className="panel-body">
                     <div className="form-group">
                         <div className="col-md-12">
-                            
+
                             <div className="col-md-6">
                             <label>Landlord Name:</label>
                             <input type="text" className="form-control" ref="landlord" />
@@ -301,7 +301,7 @@ var AddLandlords = React.createClass({
             </div>
         );
     }
-    
+
 });
 
 var ErrorMessagesBlock = React.createClass({
@@ -323,7 +323,7 @@ var ErrorMessagesBlock = React.createClass({
 
         return (
             <div className="row">
-                <div className="col-md-4 col-md-offset-4">  
+                <div className="col-md-4 col-md-offset-4">
                     {errorType}
                 </div>
             </div>
