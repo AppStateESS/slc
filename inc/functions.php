@@ -26,7 +26,7 @@ function encode($banner = null) {
 	
 	$encode_salt = \PHPWS_Settings::get('slc', 'encode_salt');
 	
-    $blowfish_salt = "$2a$07$".$encode_salt."$";
+    $blowfish_salt = "$2a$07$".$encode_salt."$$$$$$";
     return crypt($hashString, $blowfish_salt);
 }
 
