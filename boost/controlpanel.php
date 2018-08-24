@@ -23,7 +23,7 @@
 */
 
 $link[] = array(
-        'label'         => 'Student Legal Clinic Tracker 3.0.4',
+        'label'         => 'Student Legal Clinic Tracker 3.0.5',
         'restricted'    => true,
         'url'           => 'index.php?module=slc',
         'description'   => 'Track statistics about visits',

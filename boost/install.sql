@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS slc_client (
     referral	      int,
     transfer        int default 0,
     international   int default 0,
+    race varchar(19) default null,
     PRIMARY KEY   (id)
 );
 
@@ -63,6 +64,7 @@ CREATE TABLE IF NOT EXISTS slc_student_data (
 	classification	 varchar(50),
 	major	 varchar(50),
 	living_location	varchar(50),
+        race varchar(19) default null,
 	PRIMARY KEY (id)
 );
 

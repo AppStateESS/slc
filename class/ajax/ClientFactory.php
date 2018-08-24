@@ -17,12 +17,13 @@ class ClientFactory
 						'major'=>$client->getMajor(),
 						'referral'=>-1,
 						'transfer'=>$client->getTransfer(),
-						'international' => $client->getInternational());
+						'international' => $client->getInternational(),
+                                                'race' => $client->getRace());
 
-        $query = 'INSERT INTO slc_client (id, first_visit, classification, living_location, major, referral, transfer, international)
+        $query = 'INSERT INTO slc_client (id, first_visit, classification, living_location, major, referral, transfer, international,race)
         		  VALUES (:id, :fv, :classification,
         		  		  :ll, :major, :referral,
-        		  		  :transfer, :international)';
+        		  		  :transfer, :international, :race)';
 
 	  	$sth = $pdo->prepare($query);
 		$sth->execute($values);
@@ -39,7 +40,8 @@ class ClientFactory
 						'major'			=> $client->getMajor(),
 						'referral'		=> $client->getReferral(),
 						'transfer'		=> $client->getTransfer(),
-						'international' => $client->getInternational());
+						'international' => $client->getInternational(),
+                                                'race' => $client->getRace());
 
         $query = 'UPDATE slc_client
         		  SET first_visit 	  = :fv,
@@ -48,7 +50,8 @@ class ClientFactory
         		  	  major 		  = :major,
         		  	  referral 		  = :referral,
         		  	  transfer 		  = :transfer,
-        		  	  international   = :international
+        		  	  international   = :international,
+                                  race            = :race  
         		  WHERE id = :id';
 
 	  	$sth = $pdo->prepare($query);
