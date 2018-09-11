@@ -7,6 +7,11 @@ if (!defined('PHPWS_SOURCE_DIR')) {
     exit();
 }
 
+$defines_file = PHPWS_SOURCE_DIR.'mod/slc/inc/defines.php';
+
+if(is_file($defines_file)){
+    require_once $defines_file; 
+}
 // Ensure login
 \Current_User::requireLogin();
 

@@ -9,9 +9,6 @@ class ViewReports extends View {
 
                 // Date range selection
                 javascript('datepicker');
-
-
-
                 $form = new \PHPWS_Form("timespan");
 
                 $form->addText('start_date', '');   // date pickers are initially blank

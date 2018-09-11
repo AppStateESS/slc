@@ -13,6 +13,11 @@ define('STUDENT_JUNIOR',    2);
 define('STUDENT_SENIOR',    3);
 define('STUDENT_GRADUATE',  4);
 define('STUDENT_OTHER',     5);
+define('AMERICAN_INDIAN', 100);
+define('ASIAN', 200);
+define('BLACK', 300);
+define('PACIFIC_ISLANDER', 400);
+define('WHITE', 500);
 
 function getYearList(){
     return array(STUDENT_FRESHMAN  => 'Freshman',
