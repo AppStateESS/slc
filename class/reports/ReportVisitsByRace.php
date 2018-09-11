@@ -18,14 +18,6 @@ class ReportVisitsByRace extends Report {
 
     public function execute() {
 
-        $db = new \PHPWS_DB();
-        $db->addTable('slc_client');
-        $db->addTable('slc_visit');
-        $db->addJoin('inner', 'slc_client', 'slc_visit', 'id', 'client_id');
-        $db->addWhere('slc_visit.initial_date', $this->startDate, '>=');
-        $db->addWhere('slc_visit.initial_date', $this->endDate, '<', 'AND');
-        $results = $db->select();
-
         $db = Database::getDB();
         $client_tbl = $db->addTable('slc_client');
         $visit_tbl = $db->addTable('slc_visit');
