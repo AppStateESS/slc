@@ -35,13 +35,21 @@ class ReportVisitsByRace extends Report {
             ASIAN => array("client" => 0, "visit" => 0),
             BLACK => array("client" => 0, "visit" => 0),
             PACIFIC_ISLANDER => array("client" => 0, "visit" => 0),
-            WHITE => array("client" => 0, "visit" => 0));
+            WHITE => array("client" => 0, "visit" => 0),
+            MULTI_RACIAL => array("client" => 0, "visit" => 0));
         $clients = array();
 
         foreach ($results as $key => $value) {
             $race = explode(',', $value['race']);
 
-            foreach ($race as $r) {
+            if (count($race) > 1) {
+                $race_counts[MULTI_RACIAL]['visit'] ++;
+                if (!in_array($value['client_id'], $clients)) {
+                    $race_counts[MULTI_RACIAL]['client'] ++;
+                    $clients[] = $value['client_id'];
+                }
+            } else {
+                $r = array_pop($race);
                 if (!empty($r)) {
                     $race_counts[$r]['visit'] ++;
                     if (!in_array($value['client_id'], $clients)) {
@@ -90,9 +98,11 @@ class ReportVisitsByRace extends Report {
             case 500:
                 $race = "White";
                 break;
+            case 600:
+                $race = "Multiracial";
+                break;
             default:
                 $race = "Unknown";
-          
         }
         return $race;
     }

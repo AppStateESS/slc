@@ -18,6 +18,7 @@ define('ASIAN', 200);
 define('BLACK', 300);
 define('PACIFIC_ISLANDER', 400);
 define('WHITE', 500);
+define('MULTI_RACIAL', 600);
 
 function getYearList(){
     return array(STUDENT_FRESHMAN  => 'Freshman',
