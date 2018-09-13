@@ -1,8 +1,6 @@
 <?php
 namespace slc\ajax;
 
-require_once PHPWS_SOURCE_DIR . '/mod/slc/vendor/autoload.php';
-
 class POSTSendMail extends AJAX {
 
 	public function execute(){
