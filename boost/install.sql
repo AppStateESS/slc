@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS slc_referral_type (
 CREATE TABLE IF NOT EXISTS slc_student_data (
 	id 	 int not null,
 	fname	 varchar(50),
+	preferred_name varchar(19) default null,			
 	lname	 varchar(50),
 	username varchar(50),
 	classification	 varchar(50),
