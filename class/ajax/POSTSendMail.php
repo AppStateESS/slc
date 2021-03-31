@@ -22,7 +22,6 @@ class POSTSendMail extends AJAX {
 
         $template = array("cName" => $name);
         $content = \PHPWS_Template::process($template, 'slc', 'studentSurveyEmail.tpl');
-        var_dump($content);exit;
 		$message = \Swift_Message::newInstance();
 
 		$message->setSubject('How was your experience with Student Legal Clinic?');
